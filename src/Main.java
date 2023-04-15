@@ -1,13 +1,18 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 
-public class Main extends JFrame implements KeyListener{
+public class Main extends JFrame implements KeyListener {
     private static TDraw draw;
     public static boolean[] keys =new boolean[2400];
 
@@ -55,21 +60,19 @@ public class Main extends JFrame implements KeyListener{
                 t[0]++;
                 System.out.println(t[0]);
                 frame.update();
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         };
 
-
-        Timer timer=new Timer(16,action);
+        Timer timer=new Timer(0,action);
         timer.start();
-
-
-
 
 
 
 
     }
 }
-
-
-
