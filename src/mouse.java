@@ -11,6 +11,8 @@ public class mouse implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        if(!Main.label.getText().equals(""))
+            Main.label.setText("");Main.label.setVisible(false);
     }
 
     @Override

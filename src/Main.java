@@ -2,9 +2,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -16,10 +14,13 @@ import java.util.Arrays;
 public class Main {
     public static TDraw draw;
     public static JFrame frame;
+    public static JLabel label;
+
     public static void main(String[] args) throws InterruptedException {
         frame=new JFrame("Pong3");
         draw = new TDraw();
-        Button button=new Button("start");
+        label=new JLabel("click to start");
+
 
 //        Action down=new AbstractAction() {
 //            @Override
@@ -39,10 +40,13 @@ public class Main {
 //        draw.getActionMap().put("down",down);
 
 
-
+        frame.add(label);
+        label.setForeground(Color.WHITE);
+        label.setSize(100,100);
+        label.setLocation(900,400);
 
         frame.setResizable(false);
-        var x=MouseInfo.getPointerInfo().getLocation().x;
+
         frame.addKeyListener(new KeyListen());
         frame.addMouseListener(new mouse());
         frame.setSize(1920,980);
@@ -51,12 +55,14 @@ public class Main {
         frame.getContentPane().add(draw);
         frame.setVisible(true);
 
-        int y=0;
-        while(true){
+
+
+
+        int y = 0;
+        while (true) {
+            draw.repaint();
             draw.upd();
             Thread.sleep(16);
-//            System.out.println(y++);
-
         }
     }
 }

@@ -13,6 +13,7 @@ public class KeyListen implements KeyListener {
             Main.draw.down();
         else if(e.getKeyCode()==KeyEvent.VK_UP)
             Main.draw.up();
+
     }
 
     @Override
