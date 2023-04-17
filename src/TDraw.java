@@ -1,29 +1,49 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 
 public class TDraw extends JComponent {
-    public int x=25;
-    public int y=250;
+    public int lPaddleX=48;
+    public int lPaddleY=390;
+    public int lPaddleHeight=100;
+    public int lPaddleWidth=15;
+    public int ballX=960;
+    public int ballY=470;
+    public int ballWidthHeight =20;
+    public Graphics2D g2;
+    public static boolean active;
+
     public void paintComponent(Graphics g){
-        Graphics2D g2=(Graphics2D)g;
+
+        g2=(Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BICUBIC);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-//        g2.setRenderingHint(RenderingHints.KEY_DITHERING,RenderingHints.VALUE_DITHER_ENABLE);
         super.paintComponent(g2);
-        g2.drawRect(x,y,15,100);
         g2.setColor(Color.WHITE);
-        g2.fillRect(x,y,15,100);
-        g2.drawOval(450,450,);
+        g2.drawRect(lPaddleX, lPaddleY,lPaddleWidth,lPaddleHeight);
+        g2.fillRect(lPaddleX, lPaddleY,lPaddleWidth,lPaddleHeight);
+
+
+        g2.drawOval(ballX,ballY, ballWidthHeight, ballWidthHeight);
+        g2.fillOval(ballX,ballY, ballWidthHeight, ballWidthHeight);
+
+
+//        System.out.println(        g2.getClipBounds().height);
+        if(active) {
+            if ((lPaddleY < getHeight() - lPaddleHeight))
+                lPaddleY = MouseInfo.getPointerInfo().getLocation().y - lPaddleHeight;
+
+        }
     }
+
+    public void upd(){
+        repaint();
+    }
+
     public void up(){
 
-        y-=1;
-        repaint();
     }
     public void down(){
-        y+=1;
-        repaint();
+
     }
 }
