@@ -60,8 +60,8 @@ public class Main {
 
         int y = 0;
         while (true) {
-            draw.repaint();
             draw.upd();
+            draw.repaint();
             Thread.sleep(16);
         }
     }
