@@ -18,13 +18,13 @@ public class mouse implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         TDraw.active=true;
-//        Main.frame.setCursor(blankCursor);
+        Main.frame.setCursor(blankCursor);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         TDraw.active=false;
-//        Main.frame.setCursor(defcurs);
+        Main.frame.setCursor(defcurs);
     }
 
     @Override
