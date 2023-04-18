@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class TDraw extends JComponent {
     public int lPaddleX=48;
-    public int lPaddleY=390;
+    public int lPaddleY=490;
     public int lPaddleHeight=100;
     public int lPaddleWidth=15;
     public int ballX=960;
@@ -32,22 +32,39 @@ public class TDraw extends JComponent {
         b = (int) (255 * Math.random());
 
 
+
+//        System.out.println(Main.frame.getMousePosition().y);
+        //30
+        System.out.println(lPaddleY); //when -50
+        System.out.println(MouseInfo.getPointerInfo().getLocation().y); //is 60
     }
 
     public void upd() {
-        if(active) {
-            if ((MouseInfo.getPointerInfo().getLocation().y < getHeight()))
-                lPaddleY = MouseInfo.getPointerInfo().getLocation().y - lPaddleHeight;
-            if ((MouseInfo.getPointerInfo().getLocation().y < lPaddleHeight))
-                lPaddleY = MouseInfo.getPointerInfo().getLocation().y;
+        int y=MouseInfo.getPointerInfo().getLocation().y;
+        if(active) {          //
+
+//            lPaddleY=y - 60;
+
+            if(y>0){
+                if(y+10>getHeight()){
+                    lPaddleY=y-60;
+                }
+            }
+
+//            if ((MouseInfo.getPointerInfo().getLocation().y-10 < getHeight())) //mouse y less than height of panel //if in bounds do this
+//                lPaddleY = MouseInfo.getPointerInfo().getLocation().y-110; //mouse is center of paddle
+//
+//            if ((MouseInfo.getPointerInfo().getLocation().y > 0)) //mouse y less than height of panel /if in bounds do this
+//                lPaddleY = MouseInfo.getPointerInfo().getLocation().y; //mouse is center of paddle
+
         }
-        if(!Main.label.isVisible()){
-            ballX=(int) Math.sin(Math.random());
-        }
+//        if(!Main.label.isVisible()){
+//            ballX=(int) Math.sin(Math.random());
+//        }
     }
 
     public void up(){
-
+        System.out.println(MouseInfo.getPointerInfo().getLocation().y);
     }
     public void down(){
 

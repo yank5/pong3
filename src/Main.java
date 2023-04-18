@@ -49,6 +49,7 @@ public class Main {
 
         frame.addKeyListener(new KeyListen());
         frame.addMouseListener(new mouse());
+
         frame.setSize(1920,980);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(Color.BLACK);
