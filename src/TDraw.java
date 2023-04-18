@@ -4,8 +4,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 public class TDraw extends JComponent {
-    public int rand= (int) (Math.random()*180);
-    public int rand2= (int) (Math.random()*180);
+    public int rand= (int) (Math.random()*360);
+    public int rand2= (int) (Math.random()*360);
     public int lPaddleX=48;
     public int lPaddleY=490;
     public int lPaddleHeight=100;
@@ -58,11 +58,17 @@ public class TDraw extends JComponent {
 
 
         if(!Main.label.isVisible()){
-            int xDirection = (int) (Math.sin(Math.toRadians(rand)) * velocity);
-            int yDirection = (int) (Math.cos(Math.toRadians(rand2)) * -velocity);
+            int xDirection = (int) (Math.cos(Math.toRadians(rand)) * velocity);
+            int yDirection = (int) (Math.sin(Math.toRadians(rand2)) * velocity);
+            if(!g2.hitClip(ballX,ballY,ballWidthHeight,ballWidthHeight)){
+                xDirection*=-1;
+                yDirection*=-1;
 
+
+            }
             ballX = ballX + xDirection;
             ballY = ballY + yDirection;
+
 
             r = (int) (255 * Math.random());
             g = (int) (255 * Math.random());
