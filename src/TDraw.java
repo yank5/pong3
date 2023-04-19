@@ -4,8 +4,11 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 public class TDraw extends JComponent {
-    public int rand= (int) (Math.random()*360);
-    public int rand2= (int) (Math.random()*360);
+    public float rand= (float) (Math.random()*360);
+    public float rand2= (float) (Math.random()*360);
+    public float velocity=5;
+    public int xDirection = (int) (Math.cos(Math.toRadians(rand)) * velocity);
+    public int yDirection = (int) (Math.sin(Math.toRadians(rand2)) * velocity);
     public int lPaddleX=48;
     public int lPaddleY=490;
     public int lPaddleHeight=100;
@@ -14,7 +17,7 @@ public class TDraw extends JComponent {
     public int ballY=470;
     public int ballWidthHeight=15;
     public int r=255,g=255,b=255;
-    public float velocity=4;
+
     public Graphics2D g2;
     public static boolean active;
 
@@ -58,21 +61,30 @@ public class TDraw extends JComponent {
 
 
         if(!Main.label.isVisible()){
-            int xDirection = (int) (Math.cos(Math.toRadians(rand)) * velocity);
-            int yDirection = (int) (Math.sin(Math.toRadians(rand2)) * velocity);
-            if(!g2.hitClip(ballX,ballY,ballWidthHeight,ballWidthHeight)){
+
+//            g2.setClip(0,0,getWidth(),getHeight());
+
+            if(ballX+10>getWidth()||ballX-10<0||ballX-10>getWidth()||ballX+10<0){
                 xDirection*=-1;
-                yDirection*=-1;
-
-
+                r = (int) (255 * Math.random());
+                g = (int) (255 * Math.random());
+                b = (int) (255 * Math.random());
             }
-            ballX = ballX + xDirection;
-            ballY = ballY + yDirection;
+            if(ballY+10>getHeight()||ballY-5<0||ballY-10>getHeight()||ballY+10<0){
+                yDirection*=-1;
+                r = (int) (255 * Math.random());
+                g = (int) (255 * Math.random());
+                b = (int) (255 * Math.random());
+            }
 
 
-            r = (int) (255 * Math.random());
-            g = (int) (255 * Math.random());
-            b = (int) (255 * Math.random());
+            ballX = (ballX + xDirection);
+            ballY = (ballY + yDirection);
+            System.out.println(ballX+" "+ballY);
+
+            System.out.println(xDirection+" "+yDirection +" "+getWidth()+" "+getHeight());
+
+
         }
     }
 
