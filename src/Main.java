@@ -61,7 +61,6 @@ public class Main {
 
 
 
-        int y = 0;
         while (true) {
             draw.upd();
             draw.repaint();

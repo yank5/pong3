@@ -1,14 +1,17 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 
 public class TDraw extends JComponent {
-    public float velocity=6;
-    public float rand= (float) (Math.random()*360);
-    public float rand2= (float) (Math.random()*360);
-    public int xDirection = (int) (Math.cos(Math.toRadians(rand)) * velocity);
-    public int yDirection = (int) (Math.sin(Math.toRadians(rand2)) * velocity);
+    public boolean who=true;
+    public double rand=Math.random();
+    public double rand2=Math.random();
+    public int scoreL=0;
+    public int scoreR=0;
+    public int velocity=6;
+    public int xDir=1;
+    public int yDir=1;
+    public int xMove= (int) Math.round(Math.cos(Math.toRadians(rand*360)));
+    public int yMove= (int) Math.round(Math.sin(Math.toRadians(rand2*360)));
     public int lPaddleX=48;
     public int lPaddleY=490;
     public int lPaddleHeight=100;
@@ -20,6 +23,9 @@ public class TDraw extends JComponent {
 
     public Graphics2D g2;
     public static boolean active;
+    public TDraw(){
+        super();
+    }
 
     public void paintComponent(Graphics gr) {
         g2 = (Graphics2D) gr;
@@ -30,19 +36,14 @@ public class TDraw extends JComponent {
         g2.drawRect(lPaddleX, lPaddleY, lPaddleWidth, lPaddleHeight);
         g2.fillRect(lPaddleX, lPaddleY, lPaddleWidth, lPaddleHeight);
         g2.setColor(new Color(r, g, b));
-        g2.drawOval(ballX, ballY, ballWidthHeight, ballWidthHeight);
-        g2.fillOval(ballX, ballY, ballWidthHeight, ballWidthHeight);
-        super.paintComponent(g2);
-
-//        System.out.println(g2.getClip().getBounds().width);
-//        ballX*=1.5;
-//        ballY*=1.5;
-//        System.out.println(ballY);
-
-
-
-
-
+        g2.drawRect(ballX, ballY, ballWidthHeight, ballWidthHeight);
+        g2.fillRect(ballX, ballY, ballWidthHeight, ballWidthHeight);
+        g2.setColor(new Color(255, 255, 255));
+        g2.drawRect(getWidth()/2,0,5,980);
+        g2.fillRect(getWidth()/2,0,5,980);
+        g2.scale(3,3);
+        g2.drawString(""+scoreL,140,30);
+        g2.drawString(""+scoreR,440,30);
     }
 
     public void upd() {
@@ -57,34 +58,21 @@ public class TDraw extends JComponent {
         }
 
         if(!Main.label.isVisible()){
-            if(xDirection<0){
-                xDirection = (int) -(Math.cos(Math.toRadians(rand)) * velocity);
-            } else{
-                xDirection = (int) (Math.cos(Math.toRadians(rand)) * velocity);
-            }
-            if(yDirection<0){
-                yDirection = (int) -(Math.sin(Math.toRadians(rand2)) * velocity);
-            } else{
-                xDirection = (int) (Math.cos(Math.toRadians(rand)) * velocity);
-            }
-
-
-            ballX = (ballX + xDirection);
-            ballY = (ballY + yDirection);
-
 
 //            g2.setClip(0,0,getWidth(),getHeight());
 
+
+
             if(ballX+10>getWidth()||ballX-10<0||ballX-10>getWidth()||ballX+10<0){
                 velocity=6;
-                xDirection*=-1;
+                xDir *=-1;
                 r = (int) (255 * Math.random());
                 g = (int) (255 * Math.random());
                 b = (int) (255 * Math.random());
             }
             if(ballY+10>getHeight()||ballY-5<0||ballY-10>getHeight()||ballY+10<0){
                 velocity=6;
-                yDirection*=-1;
+                yDir *=-1;
                 r = (int) (255 * Math.random());
                 g = (int) (255 * Math.random());
                 b = (int) (255 * Math.random());
@@ -92,24 +80,25 @@ public class TDraw extends JComponent {
 
 
             g2.setClip(lPaddleX,lPaddleY,lPaddleWidth,lPaddleHeight);
-            g2.clipRect(lPaddleX,lPaddleY,lPaddleWidth,lPaddleHeight); //try to clip with second paddle
+//            g2.clipRect(lPaddleX,lPaddleY,lPaddleWidth,lPaddleHeight); //try to clip with second paddle
+
+
 
             if(g2.hitClip(ballX,ballY,ballWidthHeight,ballWidthHeight)){
-                xDirection*=-1;
+                xDir *=-1;
                 r = (int) (255 * Math.random());
                 g = (int) (255 * Math.random());
                 b = (int) (255 * Math.random());
-                if(ballY<lPaddleY+lPaddleHeight/2&&ballY>lPaddleY){
-                    velocity*=2;
-                }
-                if(ballY<lPaddleY+lPaddleHeight&&ballY>lPaddleY/2){
-                    velocity*=2;
-                }
             }
-            System.out.println(velocity);
+
+
+            ballX = (ballX + xMove*xDir*velocity);
+            ballY = (ballY + yMove*yDir*velocity);
+
+//            System.out.println(Math.round(rand*velocity)+" "+Math.round(rand2*velocity));
 //            System.out.println(ballX+" "+ballY);
 //
-//            System.out.println(xDirection+" "+yDirection +" "+getWidth()+" "+getHeight());
+            System.out.println(xMove +" "+ yMove);
 
 
         }
