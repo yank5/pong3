@@ -8,10 +8,10 @@ public class TDraw extends JComponent {
     public int scoreL=0;
     public int scoreR=0;
     public int velocity=6;
-    public int xDir=1;
+    public int xDir=-1;
     public int yDir=1;
-    public int xMove= (int) Math.round(Math.cos(Math.toRadians(rand*360)));
-    public int yMove= (int) Math.round(Math.sin(Math.toRadians(rand2*360)));
+    public int xMove= (int) Math.round(Math.cos(Math.toRadians(45)));
+    public int yMove= (int) Math.round(Math.sin(Math.toRadians(45)));
     public int lPaddleX=48;
     public int lPaddleY=490;
     public int lPaddleHeight=100;
@@ -59,6 +59,7 @@ public class TDraw extends JComponent {
 
         if(!Main.label.isVisible()){
 
+
 //            g2.setClip(0,0,getWidth(),getHeight());
 
 
@@ -83,22 +84,38 @@ public class TDraw extends JComponent {
 //            g2.clipRect(lPaddleX,lPaddleY,lPaddleWidth,lPaddleHeight); //try to clip with second paddle
 
 
+//            if(g2.hitClip(ballX,ballY,ballWidthHeight,ballWidthHeight)){
+//                xDir *=-1;
+//                System.out.println("test");
+//                r = (int) (255 * Math.random());
+//                g = (int) (255 * Math.random());
+//                b = (int) (255 * Math.random());
+//            }
 
-            if(g2.hitClip(ballX,ballY,ballWidthHeight,ballWidthHeight)){
-                xDir *=-1;
+            if(ballY>lPaddleY&&ballY<lPaddleY+lPaddleHeight&&ballX>lPaddleX&&ballX<lPaddleX+lPaddleWidth){
+                xDir*=-1;
+                System.out.println("test");
                 r = (int) (255 * Math.random());
                 g = (int) (255 * Math.random());
                 b = (int) (255 * Math.random());
+                if(ballX<=lPaddleX+lPaddleWidth/2){
+                    yDir*=-1;
+                }
             }
+
+
+
+
+
 
 
             ballX = (ballX + xMove*xDir*velocity);
             ballY = (ballY + yMove*yDir*velocity);
 
+
 //            System.out.println(Math.round(rand*velocity)+" "+Math.round(rand2*velocity));
 //            System.out.println(ballX+" "+ballY);
 //
-            System.out.println(xMove +" "+ yMove);
 
 
         }
