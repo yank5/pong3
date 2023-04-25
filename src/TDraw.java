@@ -10,8 +10,10 @@ public class TDraw extends JComponent {
     public int velocity=6;
     public int xDir=-1;
     public int yDir=1;
-    public int xMove= (int) Math.round(Math.cos(Math.toRadians(45)));
-    public int yMove= (int) Math.round(Math.sin(Math.toRadians(45)));
+//    public int xMove= (int) Math.round(Math.cos(Math.toRadians(45)));
+//    public int yMove= (int) Math.round(Math.sin(Math.toRadians(45)));
+    public double xMove=2;
+    public double yMove=3;
     public int lPaddleX=48;
     public int lPaddleY=490;
     public int lPaddleHeight=100;
@@ -65,14 +67,12 @@ public class TDraw extends JComponent {
 
 
             if(ballX+10>getWidth()||ballX-10<0||ballX-10>getWidth()||ballX+10<0){
-                velocity=6;
                 xDir *=-1;
                 r = (int) (255 * Math.random());
                 g = (int) (255 * Math.random());
                 b = (int) (255 * Math.random());
             }
             if(ballY+10>getHeight()||ballY-5<0||ballY-10>getHeight()||ballY+10<0){
-                velocity=6;
                 yDir *=-1;
                 r = (int) (255 * Math.random());
                 g = (int) (255 * Math.random());
@@ -80,41 +80,31 @@ public class TDraw extends JComponent {
             }
 
 
-            g2.setClip(lPaddleX,lPaddleY,lPaddleWidth,lPaddleHeight);
-//            g2.clipRect(lPaddleX,lPaddleY,lPaddleWidth,lPaddleHeight); //try to clip with second paddle
+//            g2.setClip(lPaddleX,lPaddleY,lPaddleWidth,lPaddleHeight);
 
-
-//            if(g2.hitClip(ballX,ballY,ballWidthHeight,ballWidthHeight)){
-//                xDir *=-1;
-//                System.out.println("test");
-//                r = (int) (255 * Math.random());
-//                g = (int) (255 * Math.random());
-//                b = (int) (255 * Math.random());
-//            }
 
             if(ballY>lPaddleY&&ballY<lPaddleY+lPaddleHeight&&ballX>lPaddleX&&ballX<lPaddleX+lPaddleWidth){
                 xDir*=-1;
-                System.out.println("test");
+                System.out.println(lPaddleY+lPaddleHeight-ballY);
                 r = (int) (255 * Math.random());
                 g = (int) (255 * Math.random());
                 b = (int) (255 * Math.random());
-                if(ballX<=lPaddleX+lPaddleWidth/2){
-                    yDir*=-1;
-                }
             }
+//            if((ballX<=lPaddleX+lPaddleWidth&&ballX>=lPaddleX)&&(ballY<=lPaddleY+lPaddleHeight&&ballY>=)){
+//                yDir*=-1;
+//            }
+
+
+                //if ball is under paddle
 
 
 
-
-
-
-
-            ballX = (ballX + xMove*xDir*velocity);
-            ballY = (ballY + yMove*yDir*velocity);
+            ballX = (int) (ballX + xMove/yMove*xDir*velocity);
+            ballY = (int) (ballY + yMove/xMove*yDir*velocity);
 
 
 //            System.out.println(Math.round(rand*velocity)+" "+Math.round(rand2*velocity));
-//            System.out.println(ballX+" "+ballY);
+//            System.out.println(xMove+" "+yMove);
 //
 
 
