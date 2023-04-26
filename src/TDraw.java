@@ -7,13 +7,13 @@ public class TDraw extends JComponent {
     public double rand2=Math.random();
     public int scoreL=0;
     public int scoreR=0;
-    public int velocity=6;
+    public float velocity=6F;
     public int xDir=-1;
     public int yDir=1;
 //    public int xMove= (int) Math.round(Math.cos(Math.toRadians(45)));
 //    public int yMove= (int) Math.round(Math.sin(Math.toRadians(45)));
-    public double xMove=2;
-    public double yMove=3;
+    public float xMove=3F;
+    public float yMove=2F;
     public int lPaddleX=48;
     public int lPaddleY=490;
     public int lPaddleHeight=100;
@@ -59,21 +59,20 @@ public class TDraw extends JComponent {
             }
         }
 
-        if(!Main.label.isVisible()){
+        if(!Main.label.isVisible()) {
 
 
 //            g2.setClip(0,0,getWidth(),getHeight());
 
 
-
-            if(ballX+10>getWidth()||ballX-10<0||ballX-10>getWidth()||ballX+10<0){
-                xDir *=-1;
+            if (ballX + 10 > getWidth() || ballX - 10 < 0 || ballX - 10 > getWidth() || ballX + 10 < 0) {
+                xDir *= -1;
                 r = (int) (255 * Math.random());
                 g = (int) (255 * Math.random());
                 b = (int) (255 * Math.random());
             }
-            if(ballY+10>getHeight()||ballY-5<0||ballY-10>getHeight()||ballY+10<0){
-                yDir *=-1;
+            if (ballY + 10 > getHeight() || ballY - 5 < 0 || ballY - 10 > getHeight() || ballY + 10 < 0) {
+                yDir *= -1;
                 r = (int) (255 * Math.random());
                 g = (int) (255 * Math.random());
                 b = (int) (255 * Math.random());
@@ -82,26 +81,38 @@ public class TDraw extends JComponent {
 
 //            g2.setClip(lPaddleX,lPaddleY,lPaddleWidth,lPaddleHeight);
 
+            //
 
-            if(ballY>lPaddleY&&ballY<lPaddleY+lPaddleHeight&&ballX>lPaddleX&&ballX<lPaddleX+lPaddleWidth){
-                xDir*=-1;
-                System.out.println(lPaddleY+lPaddleHeight-ballY);
+
+            if (ballY > lPaddleY-10 && ballY < lPaddleY + lPaddleHeight && ballX > lPaddleX && ballX < lPaddleX + lPaddleWidth+3) {
+
+                xDir *= -1;
+
+
+                System.out.println(Math.abs(lPaddleY+50-ballY));
+
+//                System.out.println((ballY-lPaddleY)/10F);
+//
+//
+//                velocity=(ballY-lPaddleY)/10F;
+
+//                System.out.println(velocity);
+
                 r = (int) (255 * Math.random());
                 g = (int) (255 * Math.random());
                 b = (int) (255 * Math.random());
             }
 //            if((ballX<=lPaddleX+lPaddleWidth&&ballX>=lPaddleX)&&(ballY<=lPaddleY+lPaddleHeight&&ballY>=)){
 //                yDir*=-1;
-//            }
-
-
-                //if ball is under paddle
+//
 
 
 
-            ballX = (int) (ballX + xMove/yMove*xDir*velocity);
-            ballY = (int) (ballY + yMove/xMove*yDir*velocity);
 
+//            ballX = Math.round(ballX + xMove/yMove*xDir*velocity);
+//            ballY = Math.round(ballY + yMove/xMove*yDir*velocity);
+            ballX = (int) Math.round(ballX + 1*xDir*velocity);
+            ballY = (int) Math.round(ballY + 0.1*yDir*velocity);
 
 //            System.out.println(Math.round(rand*velocity)+" "+Math.round(rand2*velocity));
 //            System.out.println(xMove+" "+yMove);
