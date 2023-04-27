@@ -60,10 +60,12 @@ public class Main {
 
 
 
+        
 
         while (true) {
             draw.upd();
             draw.repaint();
+            draw.botUpd();
             Thread.sleep(16);
         }
     }
