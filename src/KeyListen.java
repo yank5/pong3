@@ -9,11 +9,10 @@ public class KeyListen implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode()==KeyEvent.VK_DOWN)
-            Main.draw.down();
-        else if(e.getKeyCode()==KeyEvent.VK_UP)
-            Main.draw.up();
-
+//        if(e.getKeyCode()==KeyEvent.VK_DOWN)
+//            Main.draw.down();
+//        else if(e.getKeyCode()==KeyEvent.VK_UP)
+//            Main.draw.up();
     }
 
     @Override

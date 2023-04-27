@@ -95,7 +95,7 @@ public class TDraw extends JComponent {
 //            g2.setClip(lPaddleX,lPaddleY,lPaddleWidth,lPaddleHeight);
 
 //ballX > lPaddleX &&
-            if (ballY > lPaddleY-10 && ballY < lPaddleY + lPaddleHeight && ballX < lPaddleX + lPaddleWidth+4) {
+            if (ballY > lPaddleY-10 && ballY < lPaddleY + lPaddleHeight && ballX < lPaddleX + lPaddleWidth) {
                 xDir *= -1;
 
 //                System.out.println(Math.abs(lPaddleY+50-ballY));
@@ -133,6 +133,11 @@ public class TDraw extends JComponent {
 //            ballY = Math.round(ballY + yMove/xMove*yDir*velocity);
             ballX = (int) Math.round(ballX + 1*xDir*velocity);
             ballY = (int) Math.round(ballY + 0.5*yDir*velocity);
+
+            if(ballX<0){
+                System.out.println("BALL OUT OF BOUNDS ERROR");
+//                ballX=5;
+            }
 
 
 //            System.out.println(Math.round(rand*velocity)+" "+Math.round(rand2*velocity));
