@@ -101,9 +101,9 @@ public class TDraw extends JComponent {
             if(ballY-50>0){
                 if(ballY+50<getHeight()) {
                     if (destY > rPaddleY) {
-                        rPaddleY += Math.round(0.5 * velocity -1);
+                        rPaddleY += Math.round(velocity/yMove/2);
                     } else if (destY < rPaddleY) {
-                        rPaddleY -= Math.round(0.5 * velocity -1);
+                        rPaddleY -= Math.round(velocity/yMove/2);
                     }
                 }
             }
@@ -133,15 +133,16 @@ public class TDraw extends JComponent {
                     scored();
                     who=true;
                 }
-                if (ballY + 15 >= getHeight() || ballY - 5 <= 0) {
+                if (ballY + 15 >= getHeight() || ballY - 15 <= 0) {
                     yDir *= -1;
 //                    _color();
-                    collided=false;
+                    collided=true;
                 }
             }
 
             ballX = (int) Math.round(ballX + xMove/yMove*xDir*velocity);
             ballY = (int) Math.round(ballY + yMove/xMove*yDir*velocity);
+
 
 //            ballX = (int) Math.round(ballX + 1*xDir*velocity);
 //            ballY = (int) Math.round(ballY + 0.5*yDir*velocity);

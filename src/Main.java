@@ -69,7 +69,7 @@ public class Main {
             draw.repaint();
             Thread.sleep(16);
             temp++;
-            if (temp == 25) {
+            if (temp == 20) {
                 temp = 0;
                 draw.collided=false;
             }
