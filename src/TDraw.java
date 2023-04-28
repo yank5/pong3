@@ -3,17 +3,15 @@ import java.awt.*;
 
 public class TDraw extends JComponent {
     public boolean who=true;
-    public double rand=Math.random();
-    public double rand2=Math.random();
     public int scoreL=0;
     public int scoreR=0;
     public float velocity=6F;
     public int xDir=-1;
     public int yDir=1;
-//    public int xMove= (int) Math.round(Math.cos(Math.toRadians(45)));
-//    public int yMove= (int) Math.round(Math.sin(Math.toRadians(45)));
-    public float xMove=3F;
-    public float yMove=2F;
+    public double xMove= (Math.cos(Math.toRadians(Math.random()*20+25)));
+    public double yMove= (Math.sin(Math.toRadians(Math.random()*20+25)));
+//    public double xMove=Math.random()*5;
+//    public double yMove=Math.random()*5;
     public int lPaddleX=48;
     public int lPaddleY=490;
     public int lPaddleHeight=100;
@@ -26,6 +24,7 @@ public class TDraw extends JComponent {
     public int ballY=470;
     public int ballWidthHeight=15;
     public int r=255,g=255,b=255;
+    public boolean collided=false;
 
     public Graphics2D g2;
     public static boolean active;
@@ -55,89 +54,99 @@ public class TDraw extends JComponent {
         g2.drawString(""+scoreR,440,30);
     }
 
-    public void botUpd(){
 
+    public void _color(){
+        r = (int) (255 * Math.random());
+        g = (int) (255 * Math.random());
+        b = (int) (255 * Math.random());
+    }
+    public void scored(){
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        ballX=960;
+        ballY=490;
+        velocity=6F;
+        if(who){
+            xDir=-1;
+        } else{
+            xDir=1;
+        }
+        if(scoreL==10||scoreR==10){
+            velocity=0;
+            ballY=-100;
+            ballX=-100;
+            Main.label.setText("Game over!");
+            Main.label.setVisible(true);
+        }
     }
     public void upd() {
-        if(active) {
-            Point mouse = Main.frame.getMousePosition();
-            if (mouse != null) {
-                if(mouse.y-50>0) {
-                    if ((mouse.y + 50 < getHeight())) //mouse y less than height of panel //if in bounds do this
-                        lPaddleY = mouse.y - 50; //mouse is center of paddle
-                }
-            }
-        }
+
 
         if(!Main.label.isVisible()) {
-
-
-//            g2.setClip(0,0,getWidth(),getHeight());
-
-
-            if (ballX + 10 > getWidth() || ballX - 10 < 0 || ballX - 10 > getWidth() || ballX + 10 < 0) {
-                xDir *= -1;
-                r = (int) (255 * Math.random());
-                g = (int) (255 * Math.random());
-                b = (int) (255 * Math.random());
-            }
-            if (ballY + 10 > getHeight() || ballY - 5 < 0 || ballY - 10 > getHeight() || ballY + 10 < 0) {
-                yDir *= -1;
-                r = (int) (255 * Math.random());
-                g = (int) (255 * Math.random());
-                b = (int) (255 * Math.random());
-            }
-
-
-
-
-
-//            g2.setClip(lPaddleX,lPaddleY,lPaddleWidth,lPaddleHeight);
-
-//ballX > lPaddleX &&
-            if (ballY > lPaddleY-10 && ballY < lPaddleY + lPaddleHeight && ballX < lPaddleX + lPaddleWidth) {
-                xDir *= -1;
-
-//                System.out.println(Math.abs(lPaddleY+50-ballY));
-
-                velocity=Math.abs(lPaddleY+50-ballY)/5F+8;
-//                System.out.println(velocity);
-
-                r = (int) (255 * Math.random());
-                g = (int) (255 * Math.random());
-                b = (int) (255 * Math.random());
-            }
-// ballX<rPaddleX+rPaddleWidth&&
-            if(ballY > rPaddleY-10 && ballY < rPaddleY + rPaddleHeight &&ballX>rPaddleX-15){
-                velocity=Math.abs(rPaddleY+50-ballY)/5F+8;
-                xDir *= -1;
-                r = (int) (255 * Math.random());
-                g = (int) (255 * Math.random());
-                b = (int) (255 * Math.random());
+            if(active) {
+                Point mouse = Main.frame.getMousePosition();
+                if (mouse != null) {
+                    if(mouse.y-50>0) {
+                        if ((mouse.y + 50 < getHeight())) //mouse y less than height of panel //if in bounds do this
+                            lPaddleY = mouse.y - 50; //mouse is center of paddle
+                    }
+                }
             }
 
 
             int destY = ballY-50;
             if(ballY-50>0){
-                if(ballY+50<getHeight()){
+                if(ballY+50<getHeight()) {
                     if (destY > rPaddleY) {
-                        rPaddleY += Math.round(0.5*velocity);
+                        rPaddleY += Math.round(0.5 * velocity -1);
                     } else if (destY < rPaddleY) {
-                        rPaddleY -= Math.round(0.5*velocity);
+                        rPaddleY -= Math.round(0.5 * velocity -1);
                     }
-//                rPaddleY=ballY-50;
                 }
             }
 
-//            ballX = Math.round(ballX + xMove/yMove*xDir*velocity);
-//            ballY = Math.round(ballY + yMove/xMove*yDir*velocity);
-            ballX = (int) Math.round(ballX + 1*xDir*velocity);
-            ballY = (int) Math.round(ballY + 0.5*yDir*velocity);
-
-            if(ballX<0){
-                System.out.println("BALL OUT OF BOUNDS ERROR");
-//                ballX=5;
+            if(!collided) {
+                if (ballY >= lPaddleY - 10 && ballY <= lPaddleY + lPaddleHeight && ballX <= lPaddleX + lPaddleWidth) {
+                    xDir *= -1;
+                    velocity = Math.abs(lPaddleY + 50 - ballY) / 5F + 8;
+//                    _color();
+                    collided=true;
+                }
+                if (ballY >= rPaddleY - 10 && ballY <= rPaddleY + rPaddleHeight && ballX >= rPaddleX - 15) {
+                    xDir *= -1;
+                    velocity = Math.abs(rPaddleY + 50 - ballY) / 5F + 8;
+//                    _color();
+                    collided=true;
+                }
+                if (ballX + 15 >= getWidth()) {
+                    scoreL+=1;
+                    collided=true;
+                    scored();
+                    who=false;
+                }
+                if(ballX - 5 <= 0){
+                    scoreR+=1;
+                    collided=true;
+                    scored();
+                    who=true;
+                }
+                if (ballY + 15 >= getHeight() || ballY - 5 <= 0) {
+                    yDir *= -1;
+//                    _color();
+                    collided=false;
+                }
             }
+
+            ballX = (int) Math.round(ballX + xMove/yMove*xDir*velocity);
+            ballY = (int) Math.round(ballY + yMove/xMove*yDir*velocity);
+
+//            ballX = (int) Math.round(ballX + 1*xDir*velocity);
+//            ballY = (int) Math.round(ballY + 0.5*yDir*velocity);
+
+
 
 
 //            System.out.println(Math.round(rand*velocity)+" "+Math.round(rand2*velocity));
@@ -146,12 +155,5 @@ public class TDraw extends JComponent {
 
 
         }
-    }
-
-    public void up(){
-
-    }
-    public void down(){
-
     }
 }

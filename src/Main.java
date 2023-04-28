@@ -16,6 +16,8 @@ public class Main {
     public static JFrame frame;
     public static JLabel label;
 
+    private static int temp = 0;
+
     public static void main(String[] args) throws InterruptedException {
         frame=new JFrame("Pong3");
         draw = new TDraw();
@@ -42,7 +44,7 @@ public class Main {
 
         frame.add(label);
         label.setForeground(Color.WHITE);
-        label.setSize(100,100);
+        label.setSize(500,100);
         label.setLocation(900,400);
 
         frame.setResizable(false);
@@ -65,8 +67,12 @@ public class Main {
         while (true) {
             draw.upd();
             draw.repaint();
-            draw.botUpd();
             Thread.sleep(16);
+            temp++;
+            if (temp == 25) {
+                temp = 0;
+                draw.collided=false;
+            }
         }
     }
 }

@@ -9,10 +9,10 @@ public class KeyListen implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-//        if(e.getKeyCode()==KeyEvent.VK_DOWN)
-//            Main.draw.down();
-//        else if(e.getKeyCode()==KeyEvent.VK_UP)
-//            Main.draw.up();
+        if(e.getKeyCode()==KeyEvent.VK_P){
+            Main.label.setVisible(true);
+            Main.label.setText("Paused, click on screen to resume");
+        }
     }
 
     @Override
